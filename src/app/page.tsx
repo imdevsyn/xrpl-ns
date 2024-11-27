@@ -1,6 +1,5 @@
-import { Hero, MenuBar, Navbar } from "@/components";
+import { Hero, MenuBar, Navbar, ScrollingList } from "@/components";
 import { Button } from "@/components/ui/button";
-// import { Menu } from "lucide-react";
 
 export default function Home() {
   return (
@@ -21,8 +20,13 @@ export default function Home() {
         <section className=" h-[500px] justify-center items-center">
           <Hero />
         </section>
+        <section>
+          <ScrollingList />
+        </section>
+        <section>Claim Name</section>
+        <section>Bento? IDKY</section>
       </main>
-      <footer></footer>
+      <footer>Footer</footer>
     </div>
   );
 }
