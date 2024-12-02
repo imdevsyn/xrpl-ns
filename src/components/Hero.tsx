@@ -16,12 +16,15 @@ export function Hero() {
         )}
       />
       <div className="flex flex-col max-w-[1024px] justify-center items-center">
-        <h1 className="w-full tracking-tighter px-4 text-left md:text-center text-4xl md:text-5xl 
-        lg:text-7xl  font-bold text-black">
+        <h1
+          className="w-full tracking-tighter px-4 text-left md:text-center text-4xl md:text-5xl 
+        lg:text-7xl  font-bold text-black"
+        >
           Powering Digital Idenity For The XRP Ledger Ecosystem
         </h1>
         <p className="px-4 lg:px-32 mt-2 lg:mt-7 text-left md:text-center">
-          Secure, Unique, and Seamless Name System — Redefining Identity
+          Secure, Unique, and Seamless{" "}
+          <span className="font-bold">Name System</span> — Redefining Identity
           on the XRPL with Advanced Decentralization, Lightning-Fast
           Transactions, and Full Control Over Your Digital Presence.
         </p>
