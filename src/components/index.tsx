@@ -6,3 +6,5 @@ export { ScrollingList } from "./ScrollingList";
 export { Faq } from "./Faq";
 export { TestmonialList } from "./AnimatedList";
 export { Bento } from "./BentoGrid";
+export { Blog } from "./Blog";
+export { Footer } from "./Footer";

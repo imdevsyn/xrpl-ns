@@ -1,4 +1,4 @@
-import { Hero, MenuBar, Navbar, ScrollingList } from "@/components";
+import { Hero, MenuBar, Navbar, ScrollingList, Blog, Faq, Footer } from "@/components";
 import { Button } from "@/components/ui/button";
 import { AtSign, BadgeCheck, Search, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -166,11 +166,16 @@ export default function Home() {
           </div>
           <Meteors number={20} />
         </section>
-        <section className="border">
-          <h2>FAQs</h2>
+        <section>
+          <Blog />
+        </section>
+        <section>
+          <Faq />
         </section>
       </main>
-      <footer className="border">Footer</footer>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
