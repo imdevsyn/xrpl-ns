@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import AnimatedGridPattern from "@/components/ui/animated-grid-pattern";
 import { RainbowButton } from "@/components/ui/rainbow-button";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -30,7 +31,9 @@ export function Hero() {
         </p>
       </div>
       <div className="w-full mt-4 px-4 text-left md:text-center">
-        <RainbowButton>Get Your XRPL Name</RainbowButton>
+        <Link href="/register">
+          <RainbowButton>Get Your XRPL Name</RainbowButton>
+        </Link>
       </div>
     </div>
   );

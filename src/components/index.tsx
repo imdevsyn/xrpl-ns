@@ -8,3 +8,4 @@ export { TestmonialList } from "./AnimatedList";
 export { Bento } from "./BentoGrid";
 export { Blog } from "./Blog";
 export { Footer } from "./Footer";
+export { NameSearch } from "./NameSearch";
