@@ -56,7 +56,10 @@ export const NameSearch = () => {
   };
 
   const handleChange = (event) => {
-    setInputName(event.target.value);
+    const value = event.target.value.trim();
+    if (/^[a-zA-Z0-9]*$/.test(value)) {
+      setInputName(value);
+    }
   };
 
   useEffect(() => {
@@ -64,35 +67,45 @@ export const NameSearch = () => {
       const timer = setTimeout(() => {
         setLoadingName(false);
         setLoading(false);
-        console.log("Timer")
+        console.log("Timer");
       }, 500);
       return () => clearTimeout(timer);
     }
   }, [loadingName]);
 
   useEffect(() => {
-    const checkAvailability = async () => {
+    const interval = setInterval(getXrpPrice, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
       if (inputName.length > 0) {
-        setLoadingName(true);
-        setLoading(true);
-        try {
-          const availability = await readContract(config, {
-            abi: ABI,
-            address: CONTRACT_ADDRESS,
-            functionName: "isAvailable",
-            args: [inputName.toLowerCase()],
-          });
-
-          setIsAvailable(availability);
-        } catch (error) {
-          console.error("Error checking availability:", error.message);
-          setIsAvailable(null);
-        }
+        checkAvailability();
       }
-    };
-
-    checkAvailability();
+    }, 300);
+    return () => clearTimeout(timer);
   }, [inputName]);
+
+  const checkAvailability = async () => {
+    if (inputName.length > 0) {
+      setLoadingName(true);
+      setLoading(true);
+      try {
+        const availability = await readContract(config, {
+          abi: ABI,
+          address: CONTRACT_ADDRESS,
+          functionName: "isAvailable",
+          args: [inputName.toLowerCase()],
+        });
+
+        setIsAvailable(availability);
+      } catch (error) {
+        console.error("Error checking availability:", error.message);
+        setIsAvailable(null);
+      }
+    }
+  };
 
   const getXrpPrice = async () => {
     try {
@@ -158,7 +171,6 @@ export const NameSearch = () => {
 
     return newPrice;
   };
-  setInterval(getXrpPrice, 3000);
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
@@ -223,7 +235,7 @@ export const NameSearch = () => {
                 <p className="flex gap-2 items-center">
                   <span className="text-gray-500 text-sm">
                     $
-                    {formattedPrice(xrpPrice) *
+                    {Number(formattedPrice(xrpPrice)) *
                       calculateValue(inputName.length, years)}
                   </span>
                   {calculateValue(inputName.length, years)} XRP
@@ -256,7 +268,15 @@ export const NameSearch = () => {
             </div>
           </div>
         ) : (
-          !isAvailable && inputName != "" && <div>No</div>
+          !isAvailable &&
+          inputName != "" && (
+            <div className="flex flex-col justify-center mt-6 py-4 w-full h-full rounded-3xl  border bg-white">
+              <div className="flex justify-between items-center">
+                <h2 className="px-4 text-gray-500">Registered</h2>
+                <h2 className="px-4 text-gray-500">{inputName}.xrpl</h2>
+              </div>
+            </div>
+          )
         )}
       </div>
     </div>
