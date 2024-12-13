@@ -2,7 +2,8 @@
 import { cn } from "@/lib/utils";
 import { DotPattern } from "@/components/ui/dot-pattern";
 import { Footer, MenuBar, NameSearch, Navbar } from "@/components";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export default function Page() {
   return (
@@ -11,16 +12,17 @@ export default function Page() {
         <div className="h-14 w-40 flex items-center">Logo</div>
         <Navbar />
         <div className="hidden md:block w-40">
-          <Button className="w-full h-14 rounded-full" variant="outline">
+          {/* <Button className="w-full h-14 rounded-full" variant="outline">
             CONNECT
-          </Button>
+          </Button> */}
+          <ConnectButton label="CONNECT" />
         </div>
         <div className="flex md:hidden">
           <MenuBar />
         </div>
       </header>
 
-      <main className="relative flex flex-col justify-center items-center gap-2 flex-1">
+      <main className="relative pb-14 flex flex-col justify-center items-center gap-2 flex-1">
         <div className="flex justify-center pt-36 w-full max-w-xl h-[600px]">
           <DotPattern
             cr={3}

@@ -7,7 +7,7 @@ import {
 
 export function Faq() {
   return (
-    <div className="flex flex-col lg:flex-row h-[450px] justify-around items-start lg:items-center mt-6 lg:mt-0">
+    <div className="flex py-10 flex-col lg:flex-row h-full justify-around items-start lg:items-center mt-6 lg:mt-0">
       <div className="w-full lg:max-w-[400px] mb-6 lg:mb-0">
         <h2 className="text-3xl lg:text-6xl mb-4 tracking-tighter">
           Questions? <br />

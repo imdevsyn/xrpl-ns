@@ -1,10 +1,20 @@
-import { Hero, MenuBar, Navbar, ScrollingList, Blog, Faq, Footer } from "@/components";
+import {
+  Hero,
+  MenuBar,
+  Navbar,
+  ScrollingList,
+  Blog,
+  Faq,
+  Footer,
+} from "@/components";
 import { Button } from "@/components/ui/button";
 import { AtSign, BadgeCheck, Search, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import NumberTicker from "@/components/ui/number-ticker";
 
 import Meteors from "@/components/ui/meteors";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 
 export default function Home() {
   return (
@@ -13,9 +23,10 @@ export default function Home() {
         <div className="h-14 w-40 flex items-center">Logo</div>
         <Navbar />
         <div className="hidden md:block w-40">
-          <Button className="w-full h-14 rounded-full" variant="outline">
+          {/* <Button className="w-full h-14 rounded-full" variant="outline">
             CONNECT
-          </Button>
+          </Button> */}
+            <ConnectButton label="CONNECT" />
         </div>
         <div className="flex md:hidden">
           <MenuBar />
@@ -38,10 +49,10 @@ export default function Home() {
           />
           <div className="flex flex-col pl-0 md:pl-20 leading-tight gap-4 w-full">
             <h2 className="tracking-tighter text-4xl md:text-5xl lg:text-7xl font-extrabold text-black">
-              Built On The XRP Ledger
+              Built On The XRP Ledger EVM
             </h2>
             <p className="text-lg text-gray-700">
-              The XRP Ledger is a fast, energy-efficient, and reliable
+              The XRPL EVM Sidechain is a fast, energy-efficient, and reliable
               blockchain designed for secure and decentralized financial
               transactions. Our platform leverages its capabilities to deliver
               cutting-edge solutions.

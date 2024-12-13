@@ -26,7 +26,7 @@ export function Hero() {
         <p className="px-4 lg:px-32 mt-2 lg:mt-7 text-left md:text-center">
           Secure, Unique, and Seamless{" "}
           <span className="font-bold">Name System</span> — Redefining Identity
-          on the XRPL with Advanced Decentralization, Lightning-Fast
+          on the XRPL EVM with Advanced Decentralization, Lightning-Fast
           Transactions, and Full Control Over Your Digital Presence.
         </p>
       </div>

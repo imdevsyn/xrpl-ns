@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <div className="flex flex-col h-[450px] md:h-[200px] pt-10 gap-4 justify-around md:justify-between md:flex-row w-full">
+    <div className="flex flex-col h-fit md:h-[180px] pt-0 md:pt-8 gap-4 justify-around md:justify-between md:flex-row w-full">
       <div className="w-[300px]">
         <h2 className="text-2xl font-semibold">XRPL Names</h2>
         <p>Empowering digital idenity for the XRP Ledger ecosystem.</p>
