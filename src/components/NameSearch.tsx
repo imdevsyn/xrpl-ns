@@ -207,7 +207,7 @@ export const NameSearch = () => {
           value={inputName}
           onChange={handleChange}
           placeholder="Search for your .xrpl name"
-          className="h-20 p-6 bg-white text-gray-500 rounded-3xl tracking-tighter lg:text-2xl shadow-lg focus-visible:ring-0"
+          className="h-20 p-6 bg-white text-gray-500 rounded-3xl tracking-tighter text-lg md:text-2xl shadow-lg focus-visible:ring-0"
           autoComplete="off"
         />
         {loadingName ? (
@@ -299,9 +299,9 @@ export const NameSearch = () => {
         )}
       </div>
 
-      {1 && (
+      {txStatus && (
         <Modal
-          isOpen={1}
+          isOpen={isModalOpen}
           onClose={handleCloseModal}
           txHash={txHash}
           name={name}

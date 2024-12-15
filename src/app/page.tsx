@@ -1,11 +1,10 @@
 import {
   Hero,
-  MenuBar,
-  Navbar,
   ScrollingList,
   Blog,
   Faq,
   Footer,
+  Header
 } from "@/components";
 import { Button } from "@/components/ui/button";
 import { AtSign, BadgeCheck, Search, ChevronRight } from "lucide-react";
@@ -13,25 +12,11 @@ import Image from "next/image";
 import NumberTicker from "@/components/ui/number-ticker";
 
 import Meteors from "@/components/ui/meteors";
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-
 
 export default function Home() {
   return (
     <div className="px-6 mx-auto max-w-[1400px] h-full">
-      <header className="flex py-7 justify-between items-center">
-        <div className="h-14 w-40 flex items-center">Logo</div>
-        <Navbar />
-        <div className="hidden md:block w-40">
-          {/* <Button className="w-full h-14 rounded-full" variant="outline">
-            CONNECT
-          </Button> */}
-            <ConnectButton label="CONNECT" />
-        </div>
-        <div className="flex md:hidden">
-          <MenuBar />
-        </div>
-      </header>
+      <Header />
       <main className="flex flex-col gap-2">
         <section className=" h-[500px] justify-center items-center">
           <Hero />
