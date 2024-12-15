@@ -25,7 +25,6 @@ import { Modal } from "./Modal";
 
 export const NameSearch = () => {
   const { toast } = useToast();
-  // const { data: hash, isPending, error, writeContract } = useWriteContract();
   const [loading, setLoading] = useState(false);
   const [loadingName, setLoadingName] = useState(false);
   const [txStatus, setTxStatus] = useState("reverted");
@@ -35,7 +34,7 @@ export const NameSearch = () => {
   const { address, isConnected } = useAccount();
   const [inputName, setInputName] = useState("");
   const [years, setYears] = useState(1);
-  const [isAvailable, setIsAvailable] = useState(null);
+  const [isAvailable, setIsAvailable] = useState(false);
   const [xrpPrice, setXrpPrice] = useState("");
   const REGISTRATION_FEE = 1;
   const increaseYears = () => setYears((prev) => prev + 1);
@@ -45,7 +44,13 @@ export const NameSearch = () => {
     }
   };
 
-  const calculateValue = (nameLength, period) => {
+  const calculateValue = ({
+    nameLength,
+    period,
+  }: {
+    nameLength: number;
+    period: number;
+  }) => {
     let baseFee;
 
     if (nameLength > 0 && nameLength <= 3) {
@@ -60,7 +65,7 @@ export const NameSearch = () => {
     return baseFee * period;
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
     if (/^[a-zA-Z0-9]*$/.test(value)) {
       setInputName(value);
@@ -87,7 +92,7 @@ export const NameSearch = () => {
       if (inputName.length > 0) {
         checkAvailability();
       }
-    }, 300);
+    }, 100);
     return () => clearTimeout(timer);
   }, [inputName]);
 
@@ -104,31 +109,31 @@ export const NameSearch = () => {
       setLoadingName(true);
       setLoading(true);
       try {
-        const availability = await readContract(config, {
+        const availability = (await readContract(config, {
           abi: ABI,
           address: CONTRACT_ADDRESS,
           functionName: "isAvailable",
           args: [inputName.toLowerCase()],
-        });
+        })) as boolean;
 
         setIsAvailable(availability);
       } catch (error) {
-        console.error("Error checking availability:", error.message);
-        setIsAvailable(null);
+        console.error("Error checking availability:", (error as Error).message);
+        setIsAvailable(false);
       }
     }
   };
 
   const getXrpPrice = async () => {
     try {
-      const price = await readContract(config, {
+      const price = (await readContract(config, {
         abi: XRP_ORACLE_ABI,
         address: XRP_ORACLE_ADDRESS,
         functionName: "priceXRPUSDC",
-      });
+      })) as string;
       setXrpPrice(price);
     } catch (error) {
-      console.log(`Error while getting xrp price: ${error.message}`);
+      console.log(`Error while getting xrp price: ${(error as Error).message}`);
     }
   };
 
@@ -137,7 +142,7 @@ export const NameSearch = () => {
       setLoading(true);
       try {
         const nameLength = inputName.length;
-        const totalValue = calculateValue(nameLength, years);
+        const totalValue = calculateValue({ nameLength, period: years });
 
         const hash = await writeContract(config, {
           abi: ABI,
@@ -158,7 +163,7 @@ export const NameSearch = () => {
         toast({
           variant: "destructive",
           title: "Error",
-          description: error.message,
+          description: (error as Error).message,
         });
       } finally {
         setName(inputName);
@@ -181,7 +186,7 @@ export const NameSearch = () => {
     }
   };
 
-  const formattedPrice = (price) => {
+  const formattedPrice = ({ price }: { price: number }) => {
     price = Number(price) / 10000;
     const newPrice = new Intl.NumberFormat("en-US", {
       maximumFractionDigits: 2,
@@ -254,10 +259,17 @@ export const NameSearch = () => {
                 <p className="flex gap-2 items-center">
                   <span className="text-gray-500 text-sm">
                     $
-                    {formattedPrice(xrpPrice) *
-                      calculateValue(inputName.length, years)}
+                    {formattedPrice({ price: Number(xrpPrice) }) *
+                      calculateValue({
+                        nameLength: inputName.length,
+                        period: years,
+                      })}
                   </span>
-                  {calculateValue(inputName.length, years)} XRP
+                  {calculateValue({
+                    nameLength: inputName.length,
+                    period: years,
+                  })}{" "}
+                  XRP
                 </p>
               </div>
               <div className="flex justify-end pt-6">

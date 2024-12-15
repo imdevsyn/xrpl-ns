@@ -3,7 +3,17 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import ShineBorder from "@/components/ui/shine-border";
 
-export const Modal = ({ isOpen, onClose, txHash, name }) => {
+export const Modal = ({
+  isOpen,
+  onClose,
+  txHash,
+  name,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  txHash: string;
+  name: string;
+}) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

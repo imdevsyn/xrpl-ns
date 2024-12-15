@@ -4,7 +4,7 @@ import { xrpl } from "./chains/xrplEvm";
 
 const { connectors } = getDefaultWallets({
   appName: "XRPL Names",
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID || "",
 });
 
 export const config = createConfig({

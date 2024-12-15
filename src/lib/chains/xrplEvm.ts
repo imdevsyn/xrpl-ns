@@ -1,4 +1,4 @@
-import { type Chain } from "viem";
+import { Chain } from "@rainbow-me/rainbowkit";
 
 export const xrpl = {
   id: 1440002,
@@ -8,7 +8,10 @@ export const xrpl = {
     default: { http: ["https://rpc-evm-sidechain.xrpl.org"] },
   },
   blockExplorers: {
-    default: { name: "XRPL EVM Explorer", url: "https://evm-sidechain.xrpl.org" },
+    default: {
+      name: "XRPL EVM Explorer",
+      url: "https://evm-sidechain.xrpl.org",
+    },
   },
   testnet: true,
 } as const satisfies Chain;
