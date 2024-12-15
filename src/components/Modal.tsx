@@ -27,7 +27,9 @@ export const Modal = ({ isOpen, onClose, txHash, name }) => {
         }`}
       >
         <div>
-          <h2 className="text-3xl text-white">Congratulations! 🎉</h2>
+          <h2 className="text-2xl sm:text-3xl text-white">
+            Congratulations! 🎉
+          </h2>
           <p className="mt-4 text-sm text-slate-200">
             Welcome to the community of pioneers shaping the future of XRPL EVM.
             Share your achievement and inspire others to join the journey! Keep
@@ -37,7 +39,7 @@ export const Modal = ({ isOpen, onClose, txHash, name }) => {
 
         <div className="flex justify-center items-center">
           <ShineBorder
-            className="relative bg-black pt-4 w-fit rounded-3xl overflow-hidden"
+            className="relative bg-black w-fit pt-4 rounded-3xl overflow-hidden min-w-[80%]"
             color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
             borderRadius={24}
             borderWidth={2}
@@ -49,7 +51,7 @@ export const Modal = ({ isOpen, onClose, txHash, name }) => {
           <a href={`https://explorer.xrplevm.org/tx/${txHash}`} target="_blank">
             <Button
               variant="outline"
-              className="px-4 py-2 w-fit text-white bg-transparent hover:text-gray-50 hover:bg-transparent shadow-none rounded-lg"
+              className="px-4 py-2 text- w-fit text-white bg-transparent hover:text-gray-50 hover:bg-transparent shadow-none rounded-lg"
             >
               View on Explorer
             </Button>

@@ -299,9 +299,9 @@ export const NameSearch = () => {
         )}
       </div>
 
-      {txStatus && (
+      {1 && (
         <Modal
-          isOpen={isModalOpen}
+          isOpen={1}
           onClose={handleCloseModal}
           txHash={txHash}
           name={name}
