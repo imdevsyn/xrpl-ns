@@ -21,12 +21,17 @@ import {
 } from "@/lib/constants";
 import { parseEther } from "viem";
 import { LoaderCircle } from "lucide-react";
+import { Modal } from "./Modal";
 
 export const NameSearch = () => {
   const { toast } = useToast();
   // const { data: hash, isPending, error, writeContract } = useWriteContract();
   const [loading, setLoading] = useState(false);
   const [loadingName, setLoadingName] = useState(false);
+  const [txStatus, setTxStatus] = useState("reverted");
+  const [txHash, setTxHash] = useState("");
+  const [name, setName] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { address, isConnected } = useAccount();
   const [inputName, setInputName] = useState("");
   const [years, setYears] = useState(1);
@@ -67,7 +72,6 @@ export const NameSearch = () => {
       const timer = setTimeout(() => {
         setLoadingName(false);
         setLoading(false);
-        console.log("Timer");
       }, 500);
       return () => clearTimeout(timer);
     }
@@ -86,6 +90,14 @@ export const NameSearch = () => {
     }, 300);
     return () => clearTimeout(timer);
   }, [inputName]);
+
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  useEffect(() => {
+    if (txStatus === "success") {
+      setIsModalOpen(true);
+    }
+  }, [txStatus]);
 
   const checkAvailability = async () => {
     if (inputName.length > 0) {
@@ -127,7 +139,7 @@ export const NameSearch = () => {
         const nameLength = inputName.length;
         const totalValue = calculateValue(nameLength, years);
 
-        const txHash = await writeContract(config, {
+        const hash = await writeContract(config, {
           abi: ABI,
           address: CONTRACT_ADDRESS,
           functionName: "registerName",
@@ -135,15 +147,21 @@ export const NameSearch = () => {
           value: parseEther(`${totalValue}`),
           account: address,
         });
-        console.log(txHash);
 
         const { status } = await waitForTransactionReceipt(config, {
-          hash: txHash,
+          hash: hash,
         });
-        console.log(status);
+        setTxStatus(status);
+        setTxHash(hash);
       } catch (error) {
         console.log(error);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.message,
+        });
       } finally {
+        setName(inputName);
         setInputName("");
         setYears(1);
       }
@@ -167,9 +185,10 @@ export const NameSearch = () => {
     price = Number(price) / 10000;
     const newPrice = new Intl.NumberFormat("en-US", {
       maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
     }).format(price);
 
-    return newPrice;
+    return Number(newPrice);
   };
 
   return (
@@ -188,15 +207,15 @@ export const NameSearch = () => {
           value={inputName}
           onChange={handleChange}
           placeholder="Search for your .xrpl name"
-          className="h-20 p-6 bg-white text-gray-500 rounded-3xl tracking-tighter lg:text-2xl shadow-lg"
+          className="h-20 p-6 bg-white text-gray-500 rounded-3xl tracking-tighter lg:text-2xl shadow-lg focus-visible:ring-0"
           autoComplete="off"
         />
         {loadingName ? (
-          <div className="flex items-center justify-center h-full">
-            <LoaderCircle className="w-10 h-10 animate-spin text-gray-500" />
+          <div className="flex items-center justify-center mt-6 py-4 w-full h-[270px] rounded-3xl  border bg-white">
+            <LoaderCircle className="animate-spin text-gray-500" />
           </div>
         ) : isAvailable && inputName != "" ? (
-          <div className="flex flex-col mt-6 py-4 w-full h-full rounded-3xl  border bg-white">
+          <div className="flex flex-col mt-6 py-4 w-full h-full max-h-[270px] rounded-3xl  border bg-white">
             <div>
               <h2 className="px-4 text-gray-500">AVAILABLE</h2>
               <Separator className="my-4" />
@@ -235,7 +254,7 @@ export const NameSearch = () => {
                 <p className="flex gap-2 items-center">
                   <span className="text-gray-500 text-sm">
                     $
-                    {Number(formattedPrice(xrpPrice)) *
+                    {formattedPrice(xrpPrice) *
                       calculateValue(inputName.length, years)}
                   </span>
                   {calculateValue(inputName.length, years)} XRP
@@ -270,15 +289,24 @@ export const NameSearch = () => {
         ) : (
           !isAvailable &&
           inputName != "" && (
-            <div className="flex flex-col justify-center mt-6 py-4 w-full h-full rounded-3xl  border bg-white">
+            <div className="flex flex-col mt-6 py-4 w-full max-h-[270px] rounded-3xl  border bg-white">
               <div className="flex justify-between items-center">
-                <h2 className="px-4 text-gray-500">Registered</h2>
+                <h2 className="px-4 text-gray-500">REGISTERED</h2>
                 <h2 className="px-4 text-gray-500">{inputName}.xrpl</h2>
               </div>
             </div>
           )
         )}
       </div>
+
+      {txStatus && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          txHash={txHash}
+          name={name}
+        />
+      )}
     </div>
   );
 };
