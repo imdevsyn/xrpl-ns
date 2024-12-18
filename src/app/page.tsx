@@ -16,7 +16,7 @@ import Meteors from "@/components/ui/meteors";
 export default function Home() {
   return (
     <div className="px-6 mx-auto max-w-[1400px] h-full">
-      <Header />
+      <Header showNavbar={true} />
       <main className="flex flex-col gap-2">
         <section className=" h-[500px] justify-center items-center">
           <Hero />

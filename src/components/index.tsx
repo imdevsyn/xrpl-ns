@@ -11,3 +11,4 @@ export { Footer } from "./Footer";
 export { NameSearch } from "./NameSearch";
 export { Modal } from "./Modal";
 export { Header } from "./Header";
+export { Transfer } from "./Transfer";

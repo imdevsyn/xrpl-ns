@@ -6,11 +6,12 @@ export const xrpl = {
   nativeCurrency: { name: "XRP", symbol: "XRP", decimals: 18 },
   rpcUrls: {
     default: { http: ["https://rpc-evm-sidechain.xrpl.org"] },
+    
   },
   blockExplorers: {
     default: {
       name: "XRPL EVM Explorer",
-      url: "https://evm-sidechain.xrpl.org",
+      url: "https://explorer.xrplevm.org/",
     },
   },
   testnet: true,

@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Circle } from "lucide-react";
 import { RainbowButton } from "@/components/ui/rainbow-button";
 import { useAccount } from "wagmi";
@@ -22,6 +23,7 @@ import {
 import { parseEther } from "viem";
 import { LoaderCircle } from "lucide-react";
 import { Modal } from "./Modal";
+import { Transfer } from "./Transfer";
 
 export const NameSearch = () => {
   const { toast } = useToast();
@@ -88,11 +90,11 @@ export const NameSearch = () => {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       if (inputName.length > 0) {
-        checkAvailability();
+        await checkAvailability();
       }
-    }, 100);
+    }, 500);
     return () => clearTimeout(timer);
   }, [inputName]);
 
@@ -199,22 +201,37 @@ export const NameSearch = () => {
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <div className="grid w-full max-w-md gap-1.5">
-        <Label
-          htmlFor="picture"
-          className="flex tracking-tighter gap-2 items-center text-xl"
-        >
-          <Circle className="w-4 animate-pulse fill-black" />
-          XRPL Names
-        </Label>
-        <Input
-          id="picture"
-          type="text"
-          value={inputName}
-          onChange={handleChange}
-          placeholder="Search for your .xrpl name"
-          className="h-20 p-6 bg-white text-gray-500 rounded-3xl tracking-tighter text-lg md:text-2xl shadow-lg focus-visible:ring-0"
-          autoComplete="off"
-        />
+        <Tabs defaultValue="claim">
+          <div className="flex">
+            <Label
+              htmlFor="picture"
+              className="flex tracking-tighter gap-2 items-center text-xl mr-auto"
+            >
+              <Circle className="w-4 animate-pulse fill-black" />
+              XRPL Names
+            </Label>
+            <TabsList>
+              <TabsTrigger value="claim" className="">
+                Claim
+              </TabsTrigger>
+              <TabsTrigger value="transfer">Test Transfer</TabsTrigger>
+            </TabsList>
+          </div>
+          <TabsContent value="claim">
+            <Input
+              id="picture"
+              type="text"
+              value={inputName}
+              onChange={handleChange}
+              placeholder="Search for your .xrpl name"
+              className="h-20 p-6 bg-white text-gray-500 rounded-3xl tracking-tighter text-lg md:text-2xl shadow-lg focus-visible:ring-0"
+              autoComplete="off"
+            />
+          </TabsContent>
+          <TabsContent value="transfer">
+            <Transfer price={15} />
+          </TabsContent>
+        </Tabs>
         {loadingName ? (
           <div className="flex items-center justify-center mt-6 py-4 w-full h-[270px] rounded-3xl  border bg-white">
             <LoaderCircle className="animate-spin text-gray-500" />
@@ -299,7 +316,7 @@ export const NameSearch = () => {
             </div>
           </div>
         ) : (
-          !isAvailable &&
+          isAvailable === false &&
           inputName != "" && (
             <div className="flex flex-col mt-6 py-4 w-full max-h-[270px] rounded-3xl  border bg-white">
               <div className="flex justify-between items-center">
