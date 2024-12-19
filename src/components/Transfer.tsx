@@ -1,32 +1,44 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Send, Target } from "lucide-react";
+import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // import { useToast } from "@/hooks/use-toast";
 import {
   writeContract,
-  waitForTransactionReceipt,
   readContract,
+  getTransactionReceipt,
+  waitForTransactionReceipt,
 } from "@wagmi/core";
 import { config } from "@/lib/wagmi";
 import { ABI, CONTRACT_ADDRESS } from "@/lib/constants";
 import { parseEther } from "viem";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, Check, X } from "lucide-react";
 
-export function Transfer({ price }: { price: number }) {
+export function Transfer({
+  price,
+  connected,
+}: {
+  price: number;
+  connected: boolean;
+}) {
   const [loading, setLoading] = useState(false);
-  const [txStatus, setTxStatus] = useState("reverted");
-  const [txHash, setTxHash] = useState("");
+  const [fromLoading, setFromLoading] = useState(false);
+  const [toLoading, setToLoading] = useState(false);
   const [from, setFrom] = useState("");
-  const [fromAvailability, setFromAvailability] = useState(false);
-  const [toAvailability, setToAvailability] = useState(false);
   const [to, setTo] = useState("");
+  const [value, setValue] = useState(0);
+  const [fromAvailability, setFromAvailability] = useState<null | boolean>(
+    null
+  );
+  const [toAvailability, setToAvailability] = useState<null | boolean>(null);
   const { toast } = useToast();
 
-  const checkAvailability = async (name: string) => {
+  const checkAvailability = async (name: string, field: "from" | "to") => {
+    if (field === "from") setFromLoading(true);
+    if (field === "to") setToLoading(true);
     try {
       const resolved = await readContract(config, {
         abi: ABI,
@@ -37,7 +49,14 @@ export function Transfer({ price }: { price: number }) {
       return resolved;
     } catch (error) {
       console.error(`Error while resolving name: ${(error as Error).message}`);
+    } finally {
+      if (field === "from") setFromLoading(false);
+      if (field === "to") setToLoading(false);
     }
+  };
+
+  const handleValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(Number(event.target.value));
   };
 
   const submitTransaction = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -60,25 +79,14 @@ export function Transfer({ price }: { price: number }) {
 
       const { status } = await waitForTransactionReceipt(config, {
         hash: hash,
-        
       });
-      setTxHash(hash);
-      setTxStatus(status);
-      console.log(txStatus);
-    } catch (error) {
-      console.error(`Error sending transaction ${(error as Error).message}`);
-      toast({
-        title: "Error while sending tx.",
-        description: "Try again!",
-      });
-    } finally {
-      setLoading(false);
-      if (txStatus == "success") {
+
+      if (status === "success") {
         toast({
           title: "Transaction Successful!",
           action: (
             <a
-              href={`https://explorer.xrplevm.org/tx/${txHash}`}
+              href={`https://explorer.xrplevm.org/tx/${hash}`}
               target="_blank"
               className="text-sm bg-black hover:bg-slate-900 text-white px-3 py-2 rounded-lg"
             >
@@ -87,30 +95,71 @@ export function Transfer({ price }: { price: number }) {
           ),
           className: " bg-green-300",
         });
+      } else if (status === "reverted") {
+        const recheck = await getTransactionReceipt(config, {
+          hash: hash,
+        });
+
+        if (recheck.status === "success") {
+          toast({
+            title: "Transaction Successful!",
+            action: (
+              <a
+                href={`https://explorer.xrplevm.org/tx/${hash}`}
+                target="_blank"
+                className="text-sm bg-black hover:bg-slate-900 text-white px-3 py-2 rounded-lg"
+              >
+                View Tx
+              </a>
+            ),
+            className: " bg-green-300",
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Transaction Reverted.",
+            description: "Try again!",
+          });
+        }
+      }
+    } catch (error) {
+      console.error(`Error sending transaction ${error as Error}`);
+      if (connected) {
+        toast({
+          variant: "destructive",
+          title: "Error while sending tx.",
+          description: "Try again!",
+        });
       } else {
         toast({
           variant: "destructive",
-          title: "Transaction Reverted.",
-          description: "Try again!",
+          title: "Connection error",
+          description: "Connect your wallet before interacting.",
         });
       }
-      setTxStatus("")
+    } finally {
+      setLoading(false)
+      setFrom("");
+      setTo("");
+      setValue(0);
     }
   };
 
   useEffect(() => {
+    if (!from) return;
     const timer = setTimeout(async () => {
-      const isAvailable = (await checkAvailability(from)) as boolean;
+      const isAvailable = (await checkAvailability(from, "from")) as boolean;
       setFromAvailability(isAvailable);
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, [from]);
 
   useEffect(() => {
+    if (!to) return;
     const timer = setTimeout(async () => {
-      const isAvailable = (await checkAvailability(to)) as boolean;
+      const isAvailable = (await checkAvailability(to, "to")) as boolean;
       setToAvailability(isAvailable);
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, [to]);
 
@@ -126,6 +175,7 @@ export function Transfer({ price }: { price: number }) {
               type="text"
               id="from"
               name="from"
+              value={from}
               autoComplete="off"
               onChange={(e) => {
                 const value = e.target.value;
@@ -137,9 +187,20 @@ export function Transfer({ price }: { price: number }) {
                 }
               }}
               className="h-12 text-slate-100 rounded-l-xl rounded-r-none border-slate-500"
+              required
             />
-            <div className="flex items-center bg-gray-800 border text-sm px-3 border-slate-500 rounded-r-xl">
-              .XRPL
+            <div className="w-20 flex items-center justify-center border text-sm px-3 border-slate-500 rounded-r-xl bg-gray-800">
+              {fromLoading ? (
+                <LoaderCircle className="w-5 animate-spin text-gray-500" />
+              ) : !from ? (
+                ".XRPL"
+              ) : fromAvailability === null ? (
+                ".XRPL"
+              ) : fromAvailability && from ? (
+                <X className="w-5 text-red-500" />
+              ) : (
+                <Check className="w-5 text-green-500" />
+              )}
             </div>
           </div>
         </div>
@@ -152,6 +213,7 @@ export function Transfer({ price }: { price: number }) {
               type="text"
               id="to"
               name="to"
+              value={to}
               autoComplete="off"
               onChange={(e) => {
                 const value = e.target.value;
@@ -163,11 +225,20 @@ export function Transfer({ price }: { price: number }) {
                 }
               }}
               className="h-12 text-lg sm:text-3xl text-slate-100 rounded-l-xl rounded-r-none border-slate-500"
+              required
             />
-            <div
-              className={`flex items-center border text-sm px-3 border-slate-500 rounded-r-xl bg-gray-800`}
-            >
-              .XRPL
+            <div className="w-20 flex items-center justify-center border text-sm px-3 border-slate-500 rounded-r-xl bg-gray-800">
+              {toLoading ? (
+                <LoaderCircle className="w-5 animate-spin text-gray-500" />
+              ) : !to ? (
+                ".XRPL"
+              ) : toAvailability === null ? (
+                ".XRPL"
+              ) : toAvailability && to ? (
+                <X className="w-5 text-red-500" />
+              ) : (
+                <Check className="w-5 text-green-500" />
+              )}
             </div>
           </div>
         </div>
@@ -176,13 +247,22 @@ export function Transfer({ price }: { price: number }) {
             Value
           </Label>
           <div className="flex w-full items-center gap-2">
-            <Input
-              type="number"
-              id="value"
-              name="value"
-              autoComplete="off"
-              className="h-12 text-slate-100 rounded-xl border-slate-500"
-            />
+            <div className="flex items-center w-full border border-slate-500 rounded-xl pr-4">
+              <Input
+                type="number"
+                id="value"
+                name="value"
+                value={value ? value : ""}
+                step="any"
+                onChange={handleValueChange}
+                autoComplete="off"
+                className="h-12 text-slate-100 rounded-xl border-none shadow-none focus-visible:ring-0"
+                required
+              />
+              <div className="text-slate-500 text-sm">{`$${(
+                price * value
+              ).toFixed(2)}`}</div>
+            </div>
             <Button
               variant="outline"
               type="submit"

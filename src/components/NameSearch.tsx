@@ -38,6 +38,7 @@ export const NameSearch = () => {
   const [years, setYears] = useState(1);
   const [isAvailable, setIsAvailable] = useState(false);
   const [xrpPrice, setXrpPrice] = useState("");
+  const [tabValue, setTabValue] = useState("claim");
   const REGISTRATION_FEE = 1;
   const increaseYears = () => setYears((prev) => prev + 1);
   const decreaseYears = () => {
@@ -198,10 +199,18 @@ export const NameSearch = () => {
     return Number(newPrice);
   };
 
+  const handleChangeTab = (value: string) => {
+    setTabValue(value);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <div className="grid w-full max-w-md gap-1.5">
-        <Tabs defaultValue="claim">
+        <Tabs
+          defaultValue="claim"
+          value={tabValue}
+          onValueChange={handleChangeTab}
+        >
           <div className="flex">
             <Label
               htmlFor="picture"
@@ -219,7 +228,6 @@ export const NameSearch = () => {
           </div>
           <TabsContent value="claim">
             <Input
-              id="picture"
               type="text"
               value={inputName}
               onChange={handleChange}
@@ -229,14 +237,17 @@ export const NameSearch = () => {
             />
           </TabsContent>
           <TabsContent value="transfer">
-            <Transfer price={15} />
+            <Transfer
+              price={formattedPrice({ price: Number(xrpPrice) })}
+              connected={isConnected}
+            />
           </TabsContent>
         </Tabs>
         {loadingName ? (
           <div className="flex items-center justify-center mt-6 py-4 w-full h-[270px] rounded-3xl  border bg-white">
             <LoaderCircle className="animate-spin text-gray-500" />
           </div>
-        ) : isAvailable && inputName != "" ? (
+        ) : isAvailable && inputName != "" && tabValue === "claim" ? (
           <div className="flex flex-col mt-6 py-4 w-full h-full max-h-[270px] rounded-3xl  border bg-white">
             <div>
               <h2 className="px-4 text-gray-500">AVAILABLE</h2>
@@ -276,11 +287,13 @@ export const NameSearch = () => {
                 <p className="flex gap-2 items-center">
                   <span className="text-gray-500 text-sm">
                     $
-                    {formattedPrice({ price: Number(xrpPrice) }) *
+                    {(
+                      formattedPrice({ price: Number(xrpPrice) }) *
                       calculateValue({
                         nameLength: inputName.length,
                         period: years,
-                      })}
+                      })
+                    ).toFixed(2)}
                   </span>
                   {calculateValue({
                     nameLength: inputName.length,
@@ -317,7 +330,8 @@ export const NameSearch = () => {
           </div>
         ) : (
           isAvailable === false &&
-          inputName != "" && (
+          inputName != "" &&
+          tabValue === "claim" && (
             <div className="flex flex-col mt-6 py-4 w-full max-h-[270px] rounded-3xl  border bg-white">
               <div className="flex justify-between items-center">
                 <h2 className="px-4 text-gray-500">REGISTERED</h2>
