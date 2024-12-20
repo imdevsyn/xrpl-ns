@@ -13,7 +13,7 @@ export function Header({
     <header className="flex py-7 justify-between items-center">
       <div className="h-14 w-40 flex items-center">Logo</div>
       {showNavbar && <Navbar />}
-      <div className="flex ml-auto lg:ml-0 gap-4 items-center">
+      <div className="flex ml-auto lg:ml-0 items-center">
         {showManageNames && (
           <Link href="/names" className="hidden sm:block">
             My Names

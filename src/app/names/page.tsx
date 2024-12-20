@@ -8,34 +8,44 @@ import { ABI, CONTRACT_ADDRESS } from "@/lib/constants";
 import { readContract } from "@wagmi/core";
 import { useAccount } from "wagmi";
 import { config } from "@/lib/wagmi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function Page() {
   const { address } = useAccount();
   const [addressNames, setAddressNames] = useState<Array<string> | null>([]);
 
-  console.log(addressNames);
+  useEffect(() => {
+    if (!address) return;
 
-  const getNamesFromAddress = async () => {
-    try {
-      const names = (await readContract(config, {
-        abi: ABI,
-        address: CONTRACT_ADDRESS,
-        functionName: "getNamesFromAddress",
-        args: [address],
-      })) as Array<string>;
-      setAddressNames(names);
-    } catch (error) {
-      console.error(
-        `Error while getting names from address: ${(error as Error).message}`
-      );
-    }
-  };
+    const getNamesFromAddress = async () => {
+      try {
+        const names = (await readContract(config, {
+          abi: ABI,
+          address: CONTRACT_ADDRESS,
+          functionName: "namesFromAddress",
+          args: [address],
+        })) as Array<string>;
+        setAddressNames(names);
+      } catch (error) {
+        console.error(
+          `Error while getting names from address: ${(error as Error).message}`
+        );
+      }
+    };
+
+    const intervalId = setInterval(() => {
+      getNamesFromAddress();
+    }, 5000);
+
+    getNamesFromAddress();
+
+    return () => clearInterval(intervalId)
+  }, [address]);
 
   return (
     <div className="flex flex-col h-full min-h-screen px-6 mx-auto max-w-[1400px]">
-      <Header showNavbar={false} />
+      <Header showNavbar={false} showManageNames={true} />
       <main>
         <div className="flex flex-col justify-between md:flex-row py-6 px-6 border text-white rounded-3xl bg-slate-900">
           {address ? (
@@ -60,7 +70,7 @@ export default function Page() {
                   <span className="text-slate-500">
                     {addressNames?.length && address
                       ? `${addressNames[0]}.xrpl`
-                      : ""}
+                      : "No name registered"}
                   </span>
                 </div>
               </div>
