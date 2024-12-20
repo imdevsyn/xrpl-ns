@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-// import { useToast } from "@/hooks/use-toast";
 import {
   writeContract,
   readContract,

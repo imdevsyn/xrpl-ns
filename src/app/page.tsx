@@ -1,11 +1,4 @@
-import {
-  Hero,
-  ScrollingList,
-  Blog,
-  Faq,
-  Footer,
-  Header
-} from "@/components";
+import { Hero, ScrollingList, Blog, Faq, Footer, Header } from "@/components";
 import { Button } from "@/components/ui/button";
 import { AtSign, BadgeCheck, Search, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -16,7 +9,7 @@ import Meteors from "@/components/ui/meteors";
 export default function Home() {
   return (
     <div className="px-6 mx-auto max-w-[1400px] h-full">
-      <Header showNavbar={true} />
+      <Header showNavbar={true} showManageNames={false} />
       <main className="flex flex-col gap-2">
         <section className=" h-[500px] justify-center items-center">
           <Hero />

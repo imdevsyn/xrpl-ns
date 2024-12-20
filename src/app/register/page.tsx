@@ -6,7 +6,7 @@ import { Footer, Header, NameSearch } from "@/components";
 export default function Page() {
   return (
     <div className="flex flex-col min-h-screen px-6 mx-auto max-w-[1400px]">
-      <Header showNavbar={false} />
+      <Header showNavbar={false} showManageNames={true} />
       <main className="relative pb-14 flex flex-col justify-center items-center gap-2 flex-1">
         <div className="flex justify-center pt-36 w-full max-w-xl h-[600px]">
           <DotPattern
