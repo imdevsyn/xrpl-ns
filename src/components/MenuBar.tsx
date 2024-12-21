@@ -10,6 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Link from "next/link";
 
 export function MenuBar() {
   return (
@@ -24,18 +25,24 @@ export function MenuBar() {
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
         <div className="flex flex-col gap-4">
-          <a href="#" className="hover:border-b">
+          <Link href="/" className="hover:border-b">
             Home
-          </a>
-          <a href="#" className="hover:border-b">
+          </Link>
+          <Link href="/register" className="hover:border-b">
+            Register
+          </Link>
+          <Link href="/names" className="hover:border-b">
+            My Names
+          </Link>
+          <Link href="https://docs.xrplevm.org/docs/evm-sidechain/get-started-evm-sidechain" className="hover:border-b">
             XRPL Docs
-          </a>
-          <a href="#" className="hover:border-b">
-            FAQ
-          </a>
-          <a href="#" className="hover:border-b">
+          </Link>
+          <Link href="#contact" className="hover:border-b">
             Contact
-          </a>
+          </Link>
+          <Link href="#faq" className="hover:border-b">
+            FAQ
+          </Link>
         </div>
         <SheetFooter>
           <SheetClose asChild></SheetClose>

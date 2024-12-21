@@ -2,6 +2,7 @@ import { Hero, ScrollingList, Blog, Faq, Footer, Header } from "@/components";
 import { Button } from "@/components/ui/button";
 import { AtSign, BadgeCheck, Search, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import NumberTicker from "@/components/ui/number-ticker";
 
 import Meteors from "@/components/ui/meteors";
@@ -54,31 +55,31 @@ export default function Home() {
           <div className="grid grid-cols-2 justify-items-start md:justify-items-center lg:justify-items-start gap-12 w-full">
             <div>
               <h2 className="mb-2 text-3xl md:text-5xl lg:text-7xl font-extrabold text-black">
-                <NumberTicker value={92} className="tracking-tighter" />
+                <NumberTicker value={13} className="tracking-tighter" />
                 M+
               </h2>
               <p className="text-gray-700">BLOCKS</p>
             </div>
             <div>
               <h2 className="mb-2 text-3xl md:text-5xl lg:text-7xl font-extrabold text-black">
-                <NumberTicker value={13} className="tracking-tighter" />
-                M+
+                <NumberTicker value={64} className="tracking-tighter" />
+                K+
               </h2>
-              <p className="text-gray-700">XRP BURNED</p>
+              <p className="text-gray-700">ADDRESSES</p>
             </div>
             <div>
               <h2 className="mb-2 text-3xl md:text-5xl lg:text-7xl font-extrabold text-black">
-                <NumberTicker value={241} className="tracking-tighter" />
+                <NumberTicker value={699} className="tracking-tighter" />
                 K+
               </h2>
               <p className="text-gray-700">TRANSACTIONS</p>
             </div>
             <div>
               <h2 className="mb-2 text-3xl md:text-5xl lg:text-7xl font-extrabold text-black">
-                <NumberTicker value={107} className="tracking-tighter" />
+                <NumberTicker value={338} className="tracking-tighter" />
                 K+
               </h2>
-              <p className="text-gray-700">PAYMENTS</p>
+              <p className="text-gray-700">XRP TRANSFERS</p>
             </div>
           </div>
           <Image
@@ -95,7 +96,7 @@ export default function Home() {
               Getting started <br /> with XRPL Names
             </h2>
             <div className="hidden md:block">
-              <a href="">
+              <Link href="/register">
                 <Button
                   variant="outline"
                   className="h-10 bg-transparent text-white transition-all duration-300 ease-in-out transform  hover:scale-105"
@@ -103,7 +104,7 @@ export default function Home() {
                   Get Yours
                   <ChevronRight />
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -143,7 +144,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex mt-10 md:hidden">
-            <a href="">
+            <Link href="/register">
               <Button
                 variant="outline"
                 className="h-10 bg-transparent text-white transition-all duration-300 ease-in-out transform  hover:scale-105"
@@ -151,18 +152,18 @@ export default function Home() {
                 Get Yours
                 <ChevronRight />
               </Button>
-            </a>
+            </Link>
           </div>
           <Meteors number={20} />
         </section>
-        <section>
+        <section id="blog">
           <Blog />
         </section>
-        <section>
+        <section id="faq">
           <Faq />
         </section>
       </main>
-      <footer>
+      <footer id="contact">
         <Footer />
       </footer>
     </div>

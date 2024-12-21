@@ -1,32 +1,33 @@
-// import { ConnectWallet } from "./ConnectWallet";
+import Link from "next/link";
 
 export function Navbar() {
   return (
     <div className="hidden lg:flex gap-2 justify-evenly text-white items-center w-[500px] h-14 bg-black rounded-full shadow-md group">
-      <a
-        href="#"
+      <Link
+        href="/"
         className="hover:border-b group-hover:opacity-50 hover:!opacity-100 transition-opacity"
       >
         Home
-      </a>
-      <a
-        href="#"
+      </Link>
+      <Link
+        href="https://docs.xrplevm.org/docs/evm-sidechain/get-started-evm-sidechain"
+        target="_blank"
         className="hover:border-b group-hover:opacity-50 hover:!opacity-100 transition-opacity"
       >
         XRPL Docs
-      </a>
-      <a
-        href="#"
+      </Link>
+      <Link
+        href="#faq"
         className="hover:border-b group-hover:opacity-50 hover:!opacity-100 transition-opacity"
       >
         FAQ
-      </a>
-      <a
-        href="#"
+      </Link>
+      <Link
+        href="#contact"
         className="hover:border-b group-hover:opacity-50 hover:!opacity-100 transition-opacity"
       >
         Contact
-      </a>
+      </Link>
     </div>
   );
 }

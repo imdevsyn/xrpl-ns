@@ -13,7 +13,7 @@ import Image from "next/image";
 
 export default function Page() {
   const { address } = useAccount();
-  const [addressNames, setAddressNames] = useState<Array<string> | null>([]);
+  const [addressNames, setAddressNames] = useState<string[]>([]);
 
   useEffect(() => {
     if (!address) return;
@@ -45,7 +45,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col h-full min-h-screen px-6 mx-auto max-w-[1400px]">
-      <Header showNavbar={false} showManageNames={true} />
+      <Header showNavbar={false} showManageNames={false} />
       <main>
         <div className="flex flex-col justify-between md:flex-row py-6 px-6 border text-white rounded-3xl bg-slate-900">
           {address ? (

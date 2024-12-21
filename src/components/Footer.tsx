@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <div className="flex flex-col h-fit md:h-[180px] pt-0 md:pt-8 gap-4 justify-around md:justify-between md:flex-row w-full">
-      <div className="w-full w-[300px]">
+      <div className="w-[300px]">
         <h2 className="text-2xl font-semibold">XRPL Names</h2>
         <p>Empowering digital idenity for the XRP Ledger ecosystem.</p>
       </div>
@@ -9,15 +11,15 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-12 h-full items-start">
           <div className="flex flex-col text-[#5d636f]">
             <p className="text-black">ABOUT</p>
-            <span>Blog</span>
+            <Link href="#blog"><span>Blog</span></Link>
           </div>
           <div className="flex flex-col text-[#5d636f]">
             <p className="text-black">DEVS</p>
-            <span>Github</span>
+            <Link href="https://github.com/imdevsyn/xrpl-ns" target="_blank"><span>Github</span></Link>
           </div>
           <div className="flex flex-col text-[#5d636f]">
             <p className="text-black">SOCIAL</p>
-            <span>Twitter</span>
+            <Link href="https://x.com/xrplnames" target="_blank"><span>Twitter</span></Link>
           </div>
         </div>
         <div className="text-center my-6 text-[#5d636f]">

@@ -214,9 +214,9 @@ export const NameSearch = () => {
           <div className="flex">
             <Label
               htmlFor="picture"
-              className="flex tracking-tighter gap-2 items-center text-xl mr-auto"
+              className="flex tracking-tighter gap-2 items-center text-base sm:text-xl mr-auto"
             >
-              <Circle className="w-4 animate-pulse fill-black" />
+              <Circle className="w-3 animate-pulse fill-black" />
               XRPL Names
             </Label>
             <TabsList>

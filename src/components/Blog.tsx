@@ -10,26 +10,55 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useRef } from "react";
+import Image from "next/image";
 
 export function Blog() {
-  // Refs para acessar as funções dos botões do Carousel
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
+  const posts = [
+    {
+      title: "XRPL Names is live",
+      description:
+        "Embark on an exciting new chapter with XRPL Names powered by the innovative XRPL EVM Sidechain.",
+      date: "21 Dec 2024",
+      readTime: 3,
+      image: {
+        src: "logo-3.png",
+        width: 120,
+        height: 120,
+        alt: "XRPL Names Logo",
+      },
+      link: "https://x.com/xrplnames",
+    },
+    {
+      title: "Need test tokens?",
+      description:
+        "Easily obtain test tokens provided by Chains Tools to explore the features of XRPL Names. Start testing and share your experience.",
+      date: "21 Dec 2024",
+      readTime: 1,
+      image: {
+        src: "chain-tools-logo.png",
+        width: 75,
+        height: 75,
+        alt: "Chains Tools Logo",
+      },
+      link: "https://chains.tools/faucet/xrplevm",
+    },
+  ];
 
   return (
     <div className="mt-6">
-      {/* Cabeçalho com título e botões personalizados */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl lg:text-5xl tracking-tighter">Blog</h2>
         <div className="hidden md:flex gap-3">
           <button
-            onClick={() => prevRef.current?.click()} // Chama o clique do botão padrão
+            onClick={() => prevRef.current?.click()}
             className="flex justify-center items-center w-[50px] h-[50px] rounded-full border border-black hover:bg-gray-100 transition"
           >
             <ChevronLeft />
           </button>
           <button
-            onClick={() => nextRef.current?.click()} // Chama o clique do botão padrão
+            onClick={() => nextRef.current?.click()}
             className="flex justify-center items-center w-[50px] h-[50px] rounded-full border border-black hover:bg-gray-100 transition"
           >
             <ChevronRight />
@@ -37,60 +66,46 @@ export function Blog() {
         </div>
       </div>
 
-      {/* Carrossel com botões padrões escondidos */}
       <Carousel className="w-full">
-        {/* Botões padrão do Carousel ocultados, mas acessíveis via ref */}
         <CarouselPrevious ref={prevRef} className="hidden" />
         <CarouselNext ref={nextRef} className="hidden" />
 
-        {/* Conteúdo do Carousel */}
         <CarouselContent className="-ml-1">
-          <CarouselItem className="pl-1 pr-4 basis-auto">
-            <div className="flex flex-col justify-between w-[290px] sm:w-[375px] h-[405px] sm:h-[460px] px-2 pt-2 pb-6 rounded-3xl bg-slate-100">
-              <div className="w-full h-44 bg-black rounded-3xl"></div>
-
-              <div className="flex flex-col h-full justify-between px-4">
-                <div>
-                  <BlurFade delay={0.3} inView>
-                    <h3 className="text-2xl">XRPL Names is live</h3>
-                  </BlurFade>
-                </div>
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-2">
-                    <Calendar className="w-4" />
-                    <span>02 Dec 2024</span>
+          {posts.reverse().map((post) => (
+            <CarouselItem key={post.date} className="pl-1 pr-4 basis-auto">
+              <a href={post.link} target="_blank">
+                <div className="flex flex-col justify-between w-[290px] sm:w-[375px] h-[405px] sm:h-[460px] px-2 pt-2 pb-6 rounded-3xl bg-gray-200 hover:bg-gray-300">
+                  <div className="flex items-center justify-center w-full h-44 bg-white rounded-2xl">
+                    <Image
+                      src={`/${post.image.src}`}
+                      width={post.image.width}
+                      height={post.image.height}
+                      alt={post.image.alt}
+                    />
                   </div>
-                  <div className="flex gap-2">
-                    <Clock3 className="w-4" /> 3 min
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CarouselItem>
-          <CarouselItem className="pl-1 pr-4 basis-auto">
-            <div className="flex flex-col justify-between w-[290px] sm:w-[375px] h-[405px] sm:h-[460px] px-2 pt-2 pb-6 rounded-3xl bg-gray-50 hover:bg-gray-100">
-              <div className="w-full h-44 bg-black rounded-3xl">
-                
-              </div>
-
-              <div className="flex flex-col h-full justify-between px-4">
-                <div>
-                  <BlurFade delay={0.3} inView>
-                    <h3 className="text-2xl">XRPL Names is live</h3>
-                  </BlurFade>{" "}
-                </div>
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-2">
-                    <Calendar className="w-4" />
-                    <span>02 Dec 2024</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <Clock3 className="w-4" /> 3 min
+                  <div className="flex flex-col h-full justify-between px-4">
+                    <div>
+                      <BlurFade delay={0.3} inView>
+                        <h3 className="pt-5 pb-2 text-xl font-bold">
+                          {post.title}
+                        </h3>
+                        <p>{post.description}</p>{" "}
+                      </BlurFade>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="flex gap-2">
+                        <Calendar className="w-4" />
+                        <span>{post.date}</span>
+                      </div>
+                      <div className="flex gap-2">
+                        <Clock3 className="w-4" /> {post.readTime} min
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </CarouselItem>
+              </a>
+            </CarouselItem>
+          ))}
         </CarouselContent>
       </Carousel>
     </div>

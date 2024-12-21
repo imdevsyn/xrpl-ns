@@ -92,7 +92,7 @@ export function Transfer({
               View Tx
             </a>
           ),
-          className: " bg-green-300",
+          className:"bg-green-300",
         });
       } else if (status === "reverted") {
         const recheck = await getTransactionReceipt(config, {
@@ -132,7 +132,7 @@ export function Transfer({
       } else {
         toast({
           variant: "destructive",
-          title: "Connection error",
+          title: "Wallet error",
           description: "Connect your wallet before interacting.",
         });
       }
