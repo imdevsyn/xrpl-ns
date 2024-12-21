@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# XRPL Names
+XRPL Names is an innovative project developed for the Hackaledger Hackathon, with support from *XRP Ledger* and *Vega Crypto*. The project aims to revolutionize the XRP Ledger ecosystem by introducing a decentralized digital identity solution through a user-friendly name system.
 
-## Getting Started
+Instead of relying on long and complex wallet addresses, XRPL Names enables users to register unique, personalized names that simplify transactions and interactions within the XRP Ledger. This advancement enhances user experience, promotes adoption, and reduces the risk of errors in transferring funds or accessing services.
 
-First, run the development server:
+<div>
+ <img align="center" alt="nextjs-logo" src="https://img.shields.io/badge/NextJS-010101?style=for-the-badge&logo=next.js&logoColor=white">
+ <img align="center" alt="reactjs-logo" src="https://img.shields.io/badge/React-010101?style=for-the-badge&logo=react&logoColor=white">
+ <img align="center" alt="solidity-logo" src="https://img.shields.io/badge/Solidity-010101?style=for-the-badge&logo=solidity&logoColor=white">
+ <img align="center" alt="wagmi-logo" src="https://img.shields.io/badge/Wagmi-010101?style=for-the-badge&logo=wagmi&logoColor=white">
+ <img align="center" alt="typescript-logo" src="https://img.shields.io/badge/TypeScript-010101?style=for-the-badge&logo=typescript&logoColor=white">
+ <img align="center" alt="tailwind-logo" src="https://img.shields.io/badge/Tailwind-010101?style=for-the-badge&logo=tailwindcss&logoColor=white">
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Table of Contents
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Installation](#installation)
+- [License](#license)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
 
-## Learn More
+1. Clone the repository:
+   ```
+   git clone https://github.com/imdevsyn/xrpl-ns
+   ```
+   
+2. Navigate to the project directory:
+   ```
+   cd xrpl-ns
+   ```
+2. Create NEXT_PUBLIC_PROJECT_ID:
+   ```
+   NEXT_PUBLIC_PROJECT_ID="YOUR_PROJECT_ID"
+   ```
+3. You're good to go
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+This project is licensed under the MIT License.
