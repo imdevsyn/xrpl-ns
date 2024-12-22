@@ -4,6 +4,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
+import Head from "next/head";
 
 const inter = Inter({
   weight: "400",
@@ -22,6 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+      </Head>
       <body className={`${inter.className} antialiased`}>
         <Providers>{children}</Providers>
         <Toaster />

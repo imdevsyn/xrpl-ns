@@ -23,7 +23,7 @@ export function Blog() {
       date: "21 Dec 2024",
       readTime: 3,
       image: {
-        src: "logo-3.png",
+        src: "logo.png",
         width: 120,
         height: 120,
         alt: "XRPL Names Logo",
@@ -72,7 +72,7 @@ export function Blog() {
 
         <CarouselContent className="-ml-1">
           {posts.reverse().map((post) => (
-            <CarouselItem key={post.date} className="pl-1 pr-4 basis-auto">
+            <CarouselItem key={post.title} className="pl-1 pr-4 basis-auto">
               <a href={post.link} target="_blank">
                 <div className="flex flex-col justify-between w-[290px] sm:w-[375px] h-[405px] sm:h-[460px] px-2 pt-2 pb-6 rounded-3xl bg-gray-200 hover:bg-gray-300">
                   <div className="flex items-center justify-center w-full h-44 bg-white rounded-2xl">
