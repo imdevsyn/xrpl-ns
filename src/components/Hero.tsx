@@ -21,7 +21,7 @@ export function Hero() {
           className="w-full tracking-tighter px-4 text-left md:text-center text-4xl md:text-5xl 
         lg:text-7xl  font-bold text-black"
         >
-          Empowering Digital Idenity For The XRP Ledger Ecosystem
+          Empowering Digital Identity For The XRP Ledger Ecosystem
         </h1>
         <p className="px-4 lg:px-32 mt-2 lg:mt-7 text-left md:text-center">
           Secure, Unique, and Seamless{" "}
