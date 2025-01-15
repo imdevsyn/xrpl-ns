@@ -46,7 +46,7 @@ export default function Page() {
   return (
     <div className="flex flex-col h-full min-h-screen px-6 mx-auto max-w-[1400px]">
       <Header showNavbar={false} showManageNames={false} />
-      <main>
+      <main className="mb-60">
         <div className="flex flex-col justify-between md:flex-row py-6 px-6 border text-white rounded-3xl bg-slate-900">
           {address ? (
             <>
@@ -106,7 +106,7 @@ export default function Page() {
           </div>
         )}
       </main>
-      <footer className="mt-60">
+      <footer className="mt-auto">
         <Footer />
       </footer>
     </div>

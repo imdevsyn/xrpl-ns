@@ -13,12 +13,14 @@ export function Header({
   return (
     <header className="flex py-7 justify-between items-center">
       <div className="h-14 w-40 flex items-center">
-        <Image
-          src="/logo.png"
-          width={200}
-          height={200}
-          alt="XRPL Names Logo"
-        />
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            width={200}
+            height={200}
+            alt="XRPL Names Logo"
+          />
+        </Link>
       </div>
       {showNavbar && <Navbar />}
       <div className="flex ml-auto lg:ml-0 items-center">
