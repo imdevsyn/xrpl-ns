@@ -10,7 +10,7 @@ export function Navbar() {
         Home
       </Link>
       <Link
-        href="https://docs.xrplevm.org/docs/evm-sidechain/get-started-evm-sidechain"
+        href="https://docs.xrplevm.org/pages/users"
         target="_blank"
         className="hover:border-b group-hover:opacity-50 hover:!opacity-100 transition-opacity"
       >
