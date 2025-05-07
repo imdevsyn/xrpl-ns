@@ -24,6 +24,7 @@ import { parseEther } from "viem";
 import { LoaderCircle } from "lucide-react";
 import { Modal } from "./Modal";
 import { Transfer } from "./Transfer";
+import axios from "axios";
 
 export const NameSearch = () => {
   const { toast } = useToast();
@@ -129,14 +130,19 @@ export const NameSearch = () => {
 
   const getXrpPrice = async () => {
     try {
-      const price = (await readContract(config, {
-        abi: XRP_ORACLE_ABI,
-        address: XRP_ORACLE_ADDRESS,
-        functionName: "priceXRPUSDC",
-      })) as string;
-      setXrpPrice(price);
+      const { data } = await axios.get(
+        "https://explorer.testnet.xrplevm.org/api/v2/stats"
+      );
+
+      const price = data?.coin_price;
+
+      if (price) {
+        setXrpPrice(price);
+      } else {
+        console.log("XRP price not found in API response.");
+      }
     } catch (error) {
-      console.log(`Error while getting xrp price: ${(error as Error).message}`);
+      console.log(`Error while getting XRP price: ${(error as Error).message}`);
     }
   };
 
@@ -237,10 +243,7 @@ export const NameSearch = () => {
             />
           </TabsContent>
           <TabsContent value="transfer">
-            <Transfer
-              price={formattedPrice({ price: Number(xrpPrice) })}
-              connected={isConnected}
-            />
+            <Transfer price={Number(xrpPrice)} connected={isConnected} />
           </TabsContent>
         </Tabs>
         {loadingName ? (
@@ -288,7 +291,7 @@ export const NameSearch = () => {
                   <span className="text-gray-500 text-sm">
                     $
                     {(
-                      formattedPrice({ price: Number(xrpPrice) }) *
+                      Number(xrpPrice) *
                       calculateValue({
                         nameLength: inputName.length,
                         period: years,

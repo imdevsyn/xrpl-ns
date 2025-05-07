@@ -85,7 +85,7 @@ export function Transfer({
           title: "Transaction Successful!",
           action: (
             <a
-              href={`https://explorer.xrplevm.org/tx/${hash}`}
+              href={`https://explorer.testnet.xrplevm.org/tx/${hash}`}
               target="_blank"
               className="text-sm bg-black hover:bg-slate-900 text-white px-3 py-2 rounded-lg"
             >
@@ -104,7 +104,7 @@ export function Transfer({
             title: "Transaction Successful!",
             action: (
               <a
-                href={`https://explorer.xrplevm.org/tx/${hash}`}
+                href={`https://explorer.testnet.xrplevm.org/tx/${hash}`}
                 target="_blank"
                 className="text-sm bg-black hover:bg-slate-900 text-white px-3 py-2 rounded-lg"
               >

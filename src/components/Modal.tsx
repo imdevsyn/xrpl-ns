@@ -58,7 +58,7 @@ export const Modal = ({
           </ShineBorder>
         </div>
         <div className="flex gap-3 justify-end">
-          <a href={`https://explorer.xrplevm.org/tx/${txHash}`} target="_blank">
+          <a href={`https://explorer.testnet.xrplevm.org/tx/${txHash}`} target="_blank">
             <Button
               variant="outline"
               className="px-4 py-2 text- w-fit text-white bg-transparent hover:text-gray-50 hover:bg-transparent shadow-none rounded-lg"
